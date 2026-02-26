@@ -24,13 +24,8 @@ function caesarCipher(text, shift, mode = "encrypt") {
             const letter = char.toLowerCase();
             const index = abc.indexOf(letter);
 
-            let newIndex;
-
-            if (mode === "encrypt") {
-                newIndex = (index + shift) % 26;
-            } else {
-                newIndex = (index - shift + 26) % 26;
-            }
+            const netShift = mode === "encrypt" ? shift : -shift;
+            let newIndex = ((index + netShift) % 26 + 26) % 26;
 
             let newLetter = abc[newIndex];
 
@@ -72,7 +67,7 @@ client.on("message", async (message) => {
         }
     }
 
-    // 🔐 Cipher commands
+    // Cipher commands
     else if (body.startsWith('!cypher') || body.startsWith('!decypher')) {
 
         const parts = body.split(" ");
